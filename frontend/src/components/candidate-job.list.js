@@ -1,47 +1,59 @@
-import React, { useState } from "react";
-
-const Checkbox = ({ type = "checkbox", name, checked = false, onChange }) => {
-  return (
-    <input type={type} name={name} checked={checked} onChange={onChange} />
-  );
-};
+import React, { useState, useEffect } from "react";
+import { useCookies } from "react-cookie";
+import { API } from "../api-service";
 
 function CandidateJobList(props) {
-  const checkList = [];
+  const [token] = useCookies(["jp-token"]);
+  const [applyState, setApplyState] = useState([]);
 
-  for (let i = 0; i < props.jobs.length; i++) {
-    checkList[props.jobs._id] = false;
-  }
+  useEffect(() => {
+    let applyState = props.jobs;
 
-  const [checkedItems, setCheckedItems] = useState(checkList);
+    setApplyState(
+      applyState.map((job) => {
+        return {
+          select: false,
+          _id: job._id,
+          company: job.company,
+          desc: job.desc,
+        };
+      })
+    );
+  }, []);
 
-  const selectJobs = (checkedItems) => {
-    console.log(checkedItems);
+  const selectJobs = () => {
+    let jobIds = applyState
+      .filter((as) => as.select === true)
+      .map((as) => as._id);
+    API.applyForJob(jobIds, token["jp-token"])
+      .then((resp) => console.log(resp))
+      .catch((error) => console.log(error));
   };
 
   return (
     <div>
       <h2 className="mb-2rem">Apply to following jobs:</h2>
-      {props.jobs.map((item) => (
-        <label key={item._id}>
-          {item.company} - {item.desc}
-          <Checkbox
-            name={item._id}
-            checked={checkedItems[item._id]}
-            onChange={(e) =>
-              setCheckedItems([
-                ...checkedItems,
-                { [e.target.name]: e.target.checked ? true : false },
-              ])
-            }
+      {applyState.map((j, i) => (
+        <label key={j._id}>
+          {j.company} - {j.desc}
+          <input
+            onChange={(event) => {
+              let checked = event.target.checked;
+              setApplyState(
+                applyState.map((job) => {
+                  if (j._id === job._id) {
+                    job.select = checked;
+                  }
+                  return job;
+                })
+              );
+            }}
+            type="checkbox"
+            checked={j.select}
           />
         </label>
       ))}
-      <button
-        type="submit"
-        className="btn btn-primary"
-        onClick={selectJobs(checkedItems)}
-      >
+      <button type="submit" className="btn btn-primary" onClick={selectJobs()}>
         Apply
       </button>
     </div>

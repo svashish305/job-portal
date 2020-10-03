@@ -190,8 +190,8 @@ async function getAppliedHistory() {
 
 async function applyForJobs(id, params) {
   const user = await db.User.findById(id);
-  for (let i = 0; i < params.job_ids.length; i++) {
-    let matchedJob = await db.Job.findById(params.job_ids[i].job_id);
+  for (let i = 0; i < params.length; i++) {
+    let matchedJob = await db.Job.findById(params[i]);
     user.jobApplications.push(matchedJob);
   }
   await user.save();
