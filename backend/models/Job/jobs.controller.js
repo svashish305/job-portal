@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const authorize = require('../../middleware/authorize')
 const Role = require('../../role');
-const jobService = require('./jobs.service');
+const jobService = require('./job.service');
 router.get('/', authorize(), getAll);
 router.get('/:id', authorize(Role.Admin), getById);
 router.post('/', authorize(Role.Admin), create);

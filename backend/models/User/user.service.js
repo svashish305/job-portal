@@ -299,7 +299,7 @@ async function getAppliedCandidates() {
 async function applyForJobs(user_id, job_ids) {
     const user = await db.User.findById(user_id);
     job_ids.foreach((job_id) => {
-        const job = await db.Job.findById(job_id);
+        const job = db.Job.findById(job_id);
         user.jobApplications.push(job);
     })
     return user;    

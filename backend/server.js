@@ -9,17 +9,18 @@ const errorHandler = require('./middleware/error-handler');
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(cookieParser());
-const whitelist = ['http://localhost:3000'];
-const corsOptions = {
-  credentials: true, // This is important.
-  origin: (origin, callback) => {
-    if(whitelist.includes(origin))
-      return callback(null, true)
+// const whitelist = ['http://localhost:3000', 'http://localhost:4000'];
+// const corsOptions = {
+//   credentials: true, // This is important.
+//   origin: (origin, callback) => {
+//     if(whitelist.includes(origin))
+//       return callback(null, true)
 
-      callback(new Error('Not allowed by CORS'));
-  }
-}
-app.use(cors(corsOptions));
+//       callback(new Error('Not allowed by CORS'));
+//   }
+// }
+// app.use(cors(corsOptions));
+app.use(cors);
 
 app.use(function(req, res, next){
     res.io = io;
