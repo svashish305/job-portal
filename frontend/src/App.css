@@ -93,3 +93,9 @@ h1 .fa-film {
 .mb-2rem {
   margin-bottom: 2rem;
 }
+
+.toast-container {
+  position: absolute;
+  bottom: 2rem;
+  right: 2rem;
+}
