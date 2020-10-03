@@ -95,4 +95,15 @@ export class API {
       },
     });
   }
+
+  static getJobApplicationStatus(body, token) {
+    return fetch(`${process.env.REACT_APP_API_URL}/api/jobs/status`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+        body: JSON.stringify(body),
+      },
+    }).then((resp) => resp.json());
+  }
 }

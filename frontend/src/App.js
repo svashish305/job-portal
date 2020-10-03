@@ -7,14 +7,13 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSignOutAlt } from "@fortawesome/free-solid-svg-icons";
 import { useCookies } from "react-cookie";
 import { useFetch } from "./hooks/useFetch";
-import role from "./role";
 
 function App() {
   const [jobs, setJobs] = useState([]);
   const [selectedJob, setSelectedJob] = useState(null);
   const [editedJob, setEditedJob] = useState(null);
   const [token, setToken, deleteToken] = useCookies(["jp-token"]);
-  const [data, loggedInUser, loading, error] = useFetch();
+  const [data, loggedInUser, isAdmin, loading, error] = useFetch();
 
   useEffect(() => {
     setJobs(data);
@@ -80,16 +79,17 @@ function App() {
         <div>
           {jobs ? (
             <JobList
+              isAdmin={isAdmin}
               jobs={jobs}
               jobClicked={loadJob}
               editClicked={editClicked}
               removeClicked={removeClicked}
             />
           ) : null}
-          <button onClick={newJob}>New Job</button>
+          {isAdmin ? <button onClick={newJob}>New Job</button> : null}
         </div>
         <JobDetails job={selectedJob} updateJob={loadJob} />
-        {editedJob ? (
+        {isAdmin && editedJob ? (
           <JobForm
             job={editedJob}
             updatedJob={updatedJob}

@@ -1,10 +1,12 @@
 import { useState, useEffect } from "react";
 import { API } from "../api-service";
 import { useCookies } from "react-cookie";
+import role from "../role";
 
 function useFetch() {
   const [data, setData] = useState([]);
   const [loggedInUser, setLoggedInUser] = useState([]);
+  const [isAdmin, setIsAdmin] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState();
   const [token] = useCookies(["jp-token"]);
@@ -20,12 +22,14 @@ function useFetch() {
       const loggedInUser = await API.currentLoggedInUser(
         token["jp-token"]
       ).catch((err) => setError(err));
+      const isAdmin = loggedInUser.role === role.Admin;
       setLoggedInUser(loggedInUser);
+      setIsAdmin(isAdmin);
       setLoading(false);
     }
     fetchData();
   }, []);
-  return [data, loggedInUser, loading, error];
+  return [data, loggedInUser, isAdmin, loading, error];
 }
 
 export { useFetch };
