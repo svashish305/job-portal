@@ -29,11 +29,16 @@ function JobList(props) {
           return (
             <div key={job && job._id} className="job-item">
               <h2 onClick={todoClicked(job)}>{job && job.desc}</h2>
-              <FontAwesomeIcon icon={faEdit} onClick={() => editClicked(job)} />
-              <FontAwesomeIcon
-                icon={faTrash}
-                onClick={() => removeClicked(job)}
-              />
+              <div>
+                <FontAwesomeIcon
+                  icon={faEdit}
+                  onClick={() => editClicked(job)}
+                />
+                <FontAwesomeIcon
+                  icon={faTrash}
+                  onClick={() => removeClicked(job)}
+                />
+              </div>
             </div>
           );
         })}
