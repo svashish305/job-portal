@@ -37,33 +37,44 @@ function JobList(props) {
   };
 
   return (
-    <div>
-      {props.jobs &&
-        props.jobs.length &&
-        props.jobs.map((job) => {
-          return (
-            <div key={job && job._id} className="job-item">
-              <h2 onClick={jobClicked(job)}>{job && job.company}</h2>
-              {props.isAdmin ? (
-                <div>
-                  <FontAwesomeIcon
-                    icon={faEdit}
-                    onClick={() => editClicked(job)}
-                  />
-                  <FontAwesomeIcon
-                    icon={faTrash}
-                    onClick={() => removeClicked(job)}
-                  />
+    <React.Fragment>
+      {props.isAdmin ? (
+        <div>
+          {props.jobs &&
+            props.jobs.length &&
+            props.jobs.map((job) => {
+              return (
+                <div key={job && job._id} className="job-item">
+                  <h2 onClick={jobClicked(job)}>{job && job.company}</h2>
+                  <div>
+                    <FontAwesomeIcon
+                      icon={faEdit}
+                      onClick={() => editClicked(job)}
+                    />
+                    <FontAwesomeIcon
+                      icon={faTrash}
+                      onClick={() => removeClicked(job)}
+                    />
+                  </div>
                 </div>
-              ) : (
-                "Put checkbox here to compute selectedJobs"
-              )}
-              <br />
-              {/* <button onClick={() => applyJob(selectedJobs)}>Apply</button> */}
-            </div>
-          );
-        })}
-    </div>
+              );
+            })}
+        </div>
+      ) : (
+        <div>
+          {props.jobs &&
+            props.jobs.length &&
+            props.jobs.map((job) => {
+              return (
+                <div key={job && job._id} className="job-item">
+                  <h2 onClick={jobClicked(job)}>{job && job.company}</h2>
+                  <div>{/* checkbox here */}</div>
+                </div>
+              );
+            })}
+        </div>
+      )}
+    </React.Fragment>
   );
 }
 

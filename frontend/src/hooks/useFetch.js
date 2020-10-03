@@ -26,10 +26,12 @@ function useFetch() {
       setLoggedInUser(loggedInUser);
       const isAdmin = loggedInUser.role === role.Admin;
       setIsAdmin(isAdmin);
-      const appliedCandidates = await API.getAppliedCandidates(
-        token["jp-token"]
-      ).catch((err) => setError(err));
-      setAppliedCandidates(appliedCandidates);
+      if (isAdmin) {
+        const appliedCandidates = await API.getAppliedCandidates(
+          token["jp-token"]
+        ).catch((err) => setError(err));
+        setAppliedCandidates(appliedCandidates);
+      }
       setLoading(false);
     }
     fetchData();
