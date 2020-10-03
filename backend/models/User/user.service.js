@@ -68,15 +68,17 @@ async function revokeToken({ token, ipAddress }) {
 }
 
 async function register(params, origin) {
-    if (await db.User.findOne({ email: params.email })) {
-        return await sendAlreadyRegisteredEmail(params.email, origin);
-    }
-
+    
     const user = new db.User(params);
+
+    const isFirstUser = (await db.User.countDocuments({})) === 0;
+    user.role = isFirstUser ? Role.Admin : Role.User;
+    user.verificationToken = randomTokenString();
 
     user.passwordHash = hash(params.password);
 
     await user.save();
+
 }
 
 async function getAll() {

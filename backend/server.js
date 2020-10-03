@@ -20,7 +20,7 @@ app.use(cookieParser());
 //   }
 // }
 // app.use(cors(corsOptions));
-app.use(cors);
+app.use(cors());
 
 app.use('/api/users', require('./models/User/users.controller'));
 app.use('/api/jobs', require('./models/Job/jobs.controller'));

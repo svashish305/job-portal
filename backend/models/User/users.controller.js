@@ -81,16 +81,14 @@ function revokeToken(req, res, next) {
 function registerSchema(req, res, next) {
     const schema = Joi.object({
         email: Joi.string().email().required(),
-        password: Joi.string().min(6).required(),
-        role: Joi.string().required()
+        password: Joi.string().min(6).required()
     });
     validateRequest(req, next, schema);
 }
 
 function register(req, res, next) {
     userService.register(req.body, req.get('origin'))
-        // .then(() => res.json({ message: 'Registration successful, please check your email for verification instructions' }))
-        .then(user => console.log(user))
+        .then(() => res.json({ message: 'Registration successful, please check your email for verification instructions' }))
         .catch(next);
 }
 

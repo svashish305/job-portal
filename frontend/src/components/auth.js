@@ -1,13 +1,11 @@
 import React, {useState, useEffect} from 'react';
 import {API} from '../api-service';
 import {useCookies} from 'react-cookie';
-import DropdownButton from 'react-bootstrap/DropdownButton'
 
 function Auth() {
     
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [role, setRole] = useState('');
     const [isLoginView, setIsLoginView] = useState(true);
 
     const [token, setToken] = useCookies(['jp-token']);
@@ -42,12 +40,7 @@ function Auth() {
                 /><br />
                 <label htmlFor="password">Password</label><br />
                 <input id="password" type="password" placeholder="Password" value={password}
-                onChange={evt => setPassword(evt.target.value)} /><br />
-                <label htmlFor="userRole">I am a :</label><br />
-                <DropdownButton id="userRole" title="Dropdown">
-                    <MenuItem href="#recruiter">Recuiter</MenuItem>
-                    <MenuItem href="#candidate">Candidate</MenuItem>
-                </DropdownButton>   
+                onChange={evt => setPassword(evt.target.value)} /><br /> 
                 {isLoginView ?
                     <button onClick={loginClicked} disabled={isDisabled}>Login</button> :
                     <button onClick={registerClicked} disabled={isDisabled}>Register</button>
