@@ -16,7 +16,7 @@ module.exports = {
     update,
     delete: _delete,
     getLoggedInUser,
-    getAppliedCandidates,
+    getAppliedHistory,
     applyForJobs,
 };
 
@@ -175,10 +175,10 @@ async function getLoggedInUser(id) {
     return user;
 }
 
-async function getAppliedCandidates() {
-    var users = await db.User.find({ $where: "this.jobApplications.length > 1" });
-    return users;
-}
+async function getAppliedHistory() {
+    const users = await db.User.find({ jobApplications: { $exists: true, $not: {$size: 0} } });
+    return users;   
+}   
 
 async function applyForJobs(id, params) {
     const user = await db.User.findById(id);
