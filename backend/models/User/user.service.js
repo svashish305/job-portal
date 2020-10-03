@@ -166,8 +166,8 @@ function randomTokenString() {
 }
 
 function basicDetails(user) {
-    const { id, email, role, created, updated } = user;
-    return { id, email, role, created, updated };
+    const { id, email, role, jobApplications, created, updated } = user;
+    return { id, email, role, jobApplications, created, updated };
 }
 
 async function getLoggedInUser(id) {
@@ -176,15 +176,16 @@ async function getLoggedInUser(id) {
 }
 
 async function getAppliedCandidates() {
-    const users = await db.User.find({$where: "this.jobApplications.length > 1"});
+    var users = await db.User.find({ $where: "this.jobApplications.length > 1" });
     return users;
 }
 
-async function applyForJobs(user_id, job_ids) {
-    const user = await db.User.findById(user_id);
-    job_ids.foreach((job_id) => {
-        const job = db.Job.findById(job_id);
-        user.jobApplications.push(job);
-    })
-    return user;    
+async function applyForJobs(id, params) {
+    const user = await db.User.findById(id);
+    for(let i=0; i < params.job_ids.length; i++) {
+        let matchedJob = await db.Job.findById(params.job_ids[i].job_id);
+        user.jobApplications.push(matchedJob);
+    }
+    await user.save();
+    return user; 
 }

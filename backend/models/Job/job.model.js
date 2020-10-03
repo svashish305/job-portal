@@ -8,10 +8,6 @@ let Job = new Schema({
     desc: {
         type: String
     },
-    applicants: [{
-        type: mongoose.Schema.Types.ObjectId, 
-        ref: 'User'
-    }],
     updated: Date
 });
 
