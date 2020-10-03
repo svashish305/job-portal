@@ -24,7 +24,7 @@ function JobForm(props) {
       .catch((error) => console.log(error));
   };
 
-  const isDisabled = desc.length === 0 || priority.length === 0;
+  const isDisabled = company.length === 0 || desc.length === 0;
 
   return (
     <React.Fragment>
@@ -45,7 +45,7 @@ function JobForm(props) {
           <textarea
             id="desc"
             type="text"
-            placeholder="Priority"
+            placeholder="Desc"
             value={desc}
             onChange={(evt) => setDesc(evt.target.value)}
           ></textarea>

@@ -1,95 +1,102 @@
-import React, {useState, useEffect} from 'react';
-import './App.css';
-import TodoList from './components/todo-list';
-import TodoDetails from './components/todo-details';
-import TodoForm from './components/todo-form';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faSignOutAlt } from '@fortawesome/free-solid-svg-icons'
-import {useCookies} from 'react-cookie';
-import {useFetch} from './hooks/useFetch';
-import role from './role';
+import React, { useState, useEffect } from "react";
+import "./App.css";
+import JobList from "./components/job-list";
+import JobDetails from "./components/job-details";
+import JobForm from "./components/job-form";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSignOutAlt } from "@fortawesome/free-solid-svg-icons";
+import { useCookies } from "react-cookie";
+import { useFetch } from "./hooks/useFetch";
+import role from "./role";
 
 function App() {
-  const [todos, setTodos] = useState([]);
-  const [selectedTodo, setSelectedTodo] = useState(null);
-  const [editedTodo, setEditedTodo] = useState(null);
-  const [token, setToken, deleteToken] = useCookies(['jp-token']);
+  const [jobs, setJobs] = useState([]);
+  const [selectedJob, setSelectedJob] = useState(null);
+  const [editedJob, setEditedJob] = useState(null);
+  const [token, setToken, deleteToken] = useCookies(["jp-token"]);
   const [data, loggedInUser, loading, error] = useFetch();
 
   useEffect(() => {
-    setTodos(data)
-  }, [data])
+    setJobs(data);
+  }, [data]);
 
   useEffect(() => {
-    if (!token['jp-token']) window.location.href = '/';
-  }, [token])
+    if (!token["jp-token"]) window.location.href = "/";
+  }, [token]);
 
-  const loadTodo = todo => {
-    setSelectedTodo(todo);
-    setEditedTodo(null);
-  }
+  const loadJob = (job) => {
+    setSelectedJob(job);
+    setEditedJob(null);
+  };
 
-  const updatedTodo = todo => {
-    const newTodos = todos.map(td => {
-      if ( td._id === todo._id) {
-        return todo;
+  const updatedJob = (job) => {
+    const newJobs = jobs.map((td) => {
+      if (td._id === job._id) {
+        return job;
       }
       return td;
-    })
-    setTodos(newTodos)
-  }
+    });
+    setJobs(newJobs);
+  };
 
-  const editClicked = todo => {
-    setEditedTodo(todo);
-    setSelectedTodo(null);
-  }
+  const editClicked = (job) => {
+    setEditedJob(job);
+    setSelectedJob(null);
+  };
 
-  const newTodo = () => {
-    setEditedTodo({desc: '', priority: '', completed: false});
-    setSelectedTodo(null);
-  }
+  const newJob = () => {
+    setEditedJob({ desc: "", priority: "", completed: false });
+    setSelectedJob(null);
+  };
 
-  const todoCreated = todo => {
-    const newTodos = [...todos, todo];  
-    setTodos(newTodos);
-  }
+  const jobCreated = (job) => {
+    const newJobs = [...jobs, job];
+    setJobs(newJobs);
+  };
 
-  const removeClicked = todo => {
-    const newTodos = todos.filter(td => td._id !== todo._id)
-    setTodos(newTodos);
-  }
+  const removeClicked = (job) => {
+    const newJobs = jobs.filter((td) => td._id !== job._id);
+    setJobs(newJobs);
+  };
 
   const logoutUser = () => {
-    deleteToken(['jp-token']);
-  }
+    deleteToken(["jp-token"]);
+  };
 
-  if (loading) return <h1>Loading...</h1>
-  if (error) return <h1>Error loading todos</h1>
+  if (loading) return <h1>Loading...</h1>;
+  if (error) return <h1>Error loading jobs</h1>;
 
   return (
     <div className="App">
       <header className="App-header">
         <h1>
-          <span>MERN BASIC CRUD</span>
+          <span>MERN JOB PORTAL</span>
         </h1>
         <FontAwesomeIcon icon={faSignOutAlt} onClick={logoutUser} />
       </header>
       <div className="layout">
-          <h1>Hi {loggedInUser.email}!</h1>
-          <br></br>
-          <div>
-            {todos ? <TodoList todos={todos} 
-              todoClicked={loadTodo} 
-              editClicked={editClicked} 
+        <h1>Hi {loggedInUser.email}!</h1>
+        <br></br>
+        <div>
+          {jobs ? (
+            <JobList
+              jobs={jobs}
+              jobClicked={loadJob}
+              editClicked={editClicked}
               removeClicked={removeClicked}
-            /> : null}
-            <button onClick={newTodo}>New Todo</button>
-          </div>
-          <TodoDetails todo={selectedTodo} updateTodo={loadTodo} />
-          {editedTodo ? 
-          <TodoForm todo={editedTodo} updatedTodo={updatedTodo} todoCreated={todoCreated} />
-          : null}
+            />
+          ) : null}
+          <button onClick={newJob}>New Job</button>
         </div>
+        <JobDetails job={selectedJob} updateJob={loadJob} />
+        {editedJob ? (
+          <JobForm
+            job={editedJob}
+            updatedJob={updatedJob}
+            jobCreated={jobCreated}
+          />
+        ) : null}
+      </div>
     </div>
   );
 }
