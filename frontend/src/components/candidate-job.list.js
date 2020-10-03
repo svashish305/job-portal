@@ -26,7 +26,8 @@ function CandidateJobList(props) {
       .filter((as) => as.select === true)
       .map((as) => as._id);
     if (jobIds.length) {
-      API.applyForJob(jobIds, token["jp-token"])
+      // console.log(jobIds);
+      API.applyForJob(JSON.stringify(jobIds), token["jp-token"])
         .then((resp) => console.log(resp))
         .catch((error) => console.log(error));
     }
