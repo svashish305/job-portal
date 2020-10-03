@@ -4,7 +4,6 @@ const authorize = require("../../middleware/authorize");
 const Role = require("../../role");
 const jobService = require("./job.service");
 router.get("/", authorize(), getAll);
-router.get("/status", authorize(), getJobApplicationStatus);
 router.get("/:id", authorize(Role.Admin), getById);
 router.post("/", authorize(Role.Admin), create);
 router.patch("/:id", authorize(Role.Admin), update);
@@ -15,13 +14,6 @@ function getAll(req, res, next) {
   jobService
     .getAll()
     .then((jobs) => res.json(jobs))
-    .catch(next);
-}
-
-function getJobApplicationStatus(req, res, next) {
-  jobService
-    .getJobApplicationStatus(req.user.id, req.body)
-    .then((applied) => res.json({ applied }))
     .catch(next);
 }
 
@@ -38,7 +30,11 @@ function getById(req, res, next) {
 
 function create(req, res, next) {
   jobService
-    .create({ ...req.body, userId: req.user.id, updated: Date.now() })
+    .create({
+      ...req.body,
+      userId: req.user.id,
+      updated: Date.now(),
+    })
     .then((job) => res.json(job))
     .catch(next);
 }

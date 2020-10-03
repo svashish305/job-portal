@@ -22,21 +22,6 @@ function JobList(props) {
       .catch((error) => console.log(error));
   };
 
-  // const applyStatus = (job) => {
-  //   let reqObj = {
-  //     job_id: job._id,
-  //   };
-  //   API.getJobApplicationStatus(reqObj, token["jp-token"])
-  //     .then((res) => console.log(res))
-  //     .catch((error) => console.log(error));
-  // };
-
-  // const applyJob = (selectedJobs) => {
-  //   API.applyForJob(selectedJobs, token["jp-token"])
-  //     .then((res) => console.log(res))
-  //     .catch((error) => console.log(error));
-  // };
-
   return (
     <React.Fragment>
       {props.isAdmin ? (
@@ -62,7 +47,7 @@ function JobList(props) {
             })}
         </div>
       ) : (
-        <CandidateJobList jobs={props.jobs} />
+        <CandidateJobList jobs={props.jobs} loggedInUser={props.loggedInUser} />
       )}
     </React.Fragment>
   );

@@ -25,17 +25,24 @@ function CandidateJobList(props) {
     let jobIds = applyState
       .filter((as) => as.select === true)
       .map((as) => as._id);
-    API.applyForJob(jobIds, token["jp-token"])
-      .then((resp) => console.log(resp))
-      .catch((error) => console.log(error));
+    if (jobIds.length) {
+      API.applyForJob(jobIds, token["jp-token"])
+        .then((resp) => console.log(resp))
+        .catch((error) => console.log(error));
+    }
   };
 
   return (
     <div>
       <h2 className="mb-2rem">Apply to following jobs:</h2>
       {applyState.map((j, i) => (
-        <label key={j._id}>
-          {j.company} - {j.desc}
+        <div key={j._id}>
+          <label>
+            {j.company} - {j.desc} -{" "}
+            {j.applicants && j.applicants.includes(props.loggedInUser._id)
+              ? "Applied"
+              : "Not Applied"}
+          </label>
           <input
             onChange={(event) => {
               let checked = event.target.checked;
@@ -51,7 +58,7 @@ function CandidateJobList(props) {
             type="checkbox"
             checked={j.select}
           />
-        </label>
+        </div>
       ))}
       <button type="submit" className="btn btn-primary" onClick={selectJobs()}>
         Apply

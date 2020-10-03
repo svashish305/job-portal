@@ -2,7 +2,6 @@ const db = require("../../db");
 
 module.exports = {
   getAll,
-  getJobApplicationStatus,
   getById,
   create,
   update,
@@ -12,11 +11,6 @@ module.exports = {
 async function getAll() {
   const jobs = await db.Job.find();
   return jobs;
-}
-
-async function getJobApplicationStatus(user_id, params) {
-  const user = await db.User.findById(user_id);
-  return user.jobApplications.includes(params.job_id);
 }
 
 async function getById(id) {

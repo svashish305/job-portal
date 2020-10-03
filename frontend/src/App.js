@@ -117,6 +117,7 @@ function App() {
             <div>
               {jobs ? (
                 <JobList
+                  loggedInUser={loggedInUser}
                   isAdmin={isAdmin}
                   jobs={jobs}
                   jobClicked={loadJob}
