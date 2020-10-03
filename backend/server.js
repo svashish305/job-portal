@@ -22,11 +22,6 @@ app.use(cookieParser());
 // app.use(cors(corsOptions));
 app.use(cors);
 
-app.use(function(req, res, next){
-    res.io = io;
-    next();
-});
-
 app.use('/api/users', require('./models/User/users.controller'));
 app.use('/api/jobs', require('./models/Job/jobs.controller'));
 

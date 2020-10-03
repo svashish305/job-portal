@@ -74,11 +74,9 @@ async function register(params, origin) {
 
     const user = new db.User(params);
 
-    if((user.role == Role.Admin) || (user.role == Role.User)) {
-        user.passwordHash = hash(params.password);
+    user.passwordHash = hash(params.password);
 
-        await user.save();
-    }
+    await user.save();
 }
 
 async function getAll() {

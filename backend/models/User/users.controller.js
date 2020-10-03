@@ -89,7 +89,8 @@ function registerSchema(req, res, next) {
 
 function register(req, res, next) {
     userService.register(req.body, req.get('origin'))
-        .then(() => res.json({ message: 'Registration successful, please check your email for verification instructions' }))
+        // .then(() => res.json({ message: 'Registration successful, please check your email for verification instructions' }))
+        .then(user => console.log(user))
         .catch(next);
 }
 
