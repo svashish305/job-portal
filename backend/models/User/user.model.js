@@ -15,10 +15,10 @@ const schema = new Schema({
     created: { type: Date, default: Date.now },
     updated: Date,
 
-    todos: [
+    jobApplications: [
         {
             type: mongoose.Schema.Types.ObjectId,
-            ref: 'Todo'
+            ref: 'Job'
         }
     ]
 });

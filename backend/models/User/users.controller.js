@@ -21,6 +21,8 @@ router.get('/:id', authorize(), getById);
 router.post('/', authorize(Role.Admin), createSchema, create);
 router.put('/:id', authorize(), updateSchema, update);
 router.delete('/:id', authorize(), _delete);
+router.get('/applied-candidates', authorize(Role.Admin), getAppliedCandidates)
+router.patch('/apply-jobs', authorize(), applyForJobs)
 
 module.exports = router;
 
@@ -216,6 +218,18 @@ function _delete(req, res, next) {
 
     userService.delete(req.params.id)
         .then(() => res.json({ message: 'User deleted successfully' }))
+        .catch(next);
+}
+
+function getAppliedCandidates(req, res, next) {
+    userService.getAppliedCandidates()
+        .then(users => res.json(users))
+        .catch(next);
+}
+
+function applyForJobs(req, res, next) {
+    userService.applyForJobs(req.user.id, req.body)
+        .then(user => res.json(user))
         .catch(next);
 }
 

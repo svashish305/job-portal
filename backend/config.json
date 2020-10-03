@@ -1,5 +1,5 @@
 {
-    "connectionString": "mongodb://localhost/mern-crud-basic",
+    "connectionString": "mongodb://localhost/mern-job-portal",
     "secret": "HERE IS THE SECRET FOR MERN CRUD BASIC APP",
     "emailFrom": "info@mern-crud-basic.com",
     "smtpOptions": {

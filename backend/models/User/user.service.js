@@ -20,7 +20,9 @@ module.exports = {
     create,
     update,
     delete: _delete,
-    getLoggedInUser
+    getLoggedInUser,
+    getAppliedCandidates,
+    applyForJobs,
 };
 
 async function authenticate({ email, password, ipAddress }) {
@@ -81,8 +83,8 @@ async function register(params, origin) {
 
     const user = new db.User(params);
 
-    const isFirstUser = (await db.User.countDocuments({})) === 0;
-    user.role = isFirstUser ? Role.Admin : Role.User;
+    // const isFirstUser = (await db.User.countDocuments({})) === 0;
+    // user.role = isFirstUser ? Role.Admin : Role.User;
     user.verificationToken = randomTokenString();
 
     user.passwordHash = hash(params.password);
@@ -287,4 +289,18 @@ async function sendPasswordResetEmail(user, origin) {
 async function getLoggedInUser(id) {
     const user = await db.User.findById(id);
     return user;
+}
+
+async function getAppliedCandidates() {
+    const users = await db.User.find({$where: "this.jobApplications.length > 1"});
+    return users;
+}
+
+async function applyForJobs(user_id, job_ids) {
+    const user = await db.User.findById(user_id);
+    job_ids.foreach((job_id) => {
+        const job = await db.Job.findById(job_id);
+        user.jobApplications.push(job);
+    })
+    return user;    
 }

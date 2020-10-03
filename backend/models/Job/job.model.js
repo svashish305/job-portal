@@ -1,21 +1,18 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-let Todo = new Schema({
+let Job = new Schema({
+    company: {
+        type: String
+    },
     desc: {
         type: String
     },
-    priority: {
-        type: String
-    },
-    completed: {
-        type: Boolean
-    },
-    userId: {
+    applicants: [{
         type: mongoose.Schema.Types.ObjectId, 
         ref: 'User'
-    },
+    }],
     updated: Date
 });
 
-module.exports = mongoose.model('Todo', Todo);
+module.exports = mongoose.model('Job', Job);
