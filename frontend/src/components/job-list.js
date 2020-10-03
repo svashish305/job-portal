@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEdit, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { API } from "../api-service";
 import { useCookies } from "react-cookie";
+import CandidateJobList from "./candidate-job.list";
 
 function JobList(props) {
   const [token] = useCookies(["jp-token"]);
@@ -21,20 +22,20 @@ function JobList(props) {
       .catch((error) => console.log(error));
   };
 
-  const applyStatus = (job) => {
-    let reqObj = {
-      job_id: job._id,
-    };
-    API.getJobApplicationStatus(reqObj, token["jp-token"])
-      .then((res) => console.log(res))
-      .catch((error) => console.log(error));
-  };
+  // const applyStatus = (job) => {
+  //   let reqObj = {
+  //     job_id: job._id,
+  //   };
+  //   API.getJobApplicationStatus(reqObj, token["jp-token"])
+  //     .then((res) => console.log(res))
+  //     .catch((error) => console.log(error));
+  // };
 
-  const applyJob = (selectedJobs) => {
-    API.applyForJob(selectedJobs, token["jp-token"])
-      .then((res) => console.log(res))
-      .catch((error) => console.log(error));
-  };
+  // const applyJob = (selectedJobs) => {
+  //   API.applyForJob(selectedJobs, token["jp-token"])
+  //     .then((res) => console.log(res))
+  //     .catch((error) => console.log(error));
+  // };
 
   return (
     <React.Fragment>
@@ -61,18 +62,7 @@ function JobList(props) {
             })}
         </div>
       ) : (
-        <div>
-          {props.jobs &&
-            props.jobs.length &&
-            props.jobs.map((job) => {
-              return (
-                <div key={job && job._id} className="job-item">
-                  <h2 onClick={jobClicked(job)}>{job && job.company}</h2>
-                  <div>{/* checkbox here */}</div>
-                </div>
-              );
-            })}
-        </div>
+        <CandidateJobList jobs={props.jobs} />
       )}
     </React.Fragment>
   );
