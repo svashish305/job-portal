@@ -30,11 +30,11 @@ function JobList(props) {
       .catch((error) => console.log(error));
   };
 
-  // const applyJob = (job) => {
-  //   API.applyForJob(job._id, token["jp-token"])
-  //     .then((res) => console.log(res))
-  //     .catch((error) => console.log(error));
-  // };
+  const applyJob = (selectedJobs) => {
+    API.applyForJob(selectedJobs, token["jp-token"])
+      .then((res) => console.log(res))
+      .catch((error) => console.log(error));
+  };
 
   return (
     <div>
@@ -56,10 +56,10 @@ function JobList(props) {
                   />
                 </div>
               ) : (
-                "Put checkbox here"
+                "Put checkbox here to compute selectedJobs"
               )}
               <br />
-              {/* <button onClick={applyJob(selectedJobs)}>Apply</button> */}
+              {/* <button onClick={() => applyJob(selectedJobs)}>Apply</button> */}
             </div>
           );
         })}
