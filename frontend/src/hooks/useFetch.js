@@ -7,16 +7,16 @@ function useFetch() {
     const [loggedInUser, setLoggedInUser] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState();
-    const [token] = useCookies(['mr-token']);
+    const [token] = useCookies(['jp-token']);
 
     useEffect(() => {
         async function fetchData() {
             setLoading(true);
             setError();
-            const data = await API.getTodos(token['mr-token'])
+            const data = await API.getTodos(token['jp-token'])
             .catch(err => setError(err))
             setData(data)
-            const loggedInUser = await API.currentLoggedInUser(token['mr-token'])
+            const loggedInUser = await API.currentLoggedInUser(token['jp-token'])
             .catch(err => setError(err))
             setLoggedInUser(loggedInUser)
             setLoading(false);

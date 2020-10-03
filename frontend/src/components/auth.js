@@ -10,15 +10,15 @@ function Auth() {
     const [role, setRole] = useState('');
     const [isLoginView, setIsLoginView] = useState(true);
 
-    const [token, setToken] = useCookies(['mr-token']);
+    const [token, setToken] = useCookies(['jp-token']);
 
     useEffect(() => {
-        if (token['mr-token']) window.location.href = '/todos';
+        if (token['jp-token']) window.location.href = '/todos';
     }, [token])
     
     const loginClicked = () => {
         API.loginUser({email, password})
-            .then(resp => setToken('mr-token', resp.jwtToken))
+            .then(resp => setToken('jp-token', resp.jwtToken))
             .catch(error => console.log(error))
     }
 

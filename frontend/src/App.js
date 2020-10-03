@@ -1,6 +1,5 @@
 import React, {useState, useEffect} from 'react';
 import './App.css';
-import socketIOClient from "socket.io-client";
 import TodoList from './components/todo-list';
 import TodoDetails from './components/todo-details';
 import TodoForm from './components/todo-form';
@@ -14,35 +13,16 @@ function App() {
   const [todos, setTodos] = useState([]);
   const [selectedTodo, setSelectedTodo] = useState(null);
   const [editedTodo, setEditedTodo] = useState(null);
-  const [token, setToken, deleteToken] = useCookies(['mr-token']);
+  const [token, setToken, deleteToken] = useCookies(['jp-token']);
   const [data, loggedInUser, loading, error] = useFetch();
-  const [socketResponse, setSocketResponse] = useState("");
 
   useEffect(() => {
     setTodos(data)
   }, [data])
 
   useEffect(() => {
-    if (!token['mr-token']) window.location.href = '/';
+    if (!token['jp-token']) window.location.href = '/';
   }, [token])
-
-  useEffect(() => {
-    const socket = socketIOClient(process.env.REACT_APP_API_URL);
-    socket.on("createdTodo", d => {
-      console.log(d)
-      setSocketResponse(d);
-    });
-    setSocketResponse('');
-    socket.on("updatedTodo", d => {
-      console.log(d)
-      setSocketResponse(d);
-    });
-    setSocketResponse('');
-    socket.on("completedTodo", d => {
-      console.log(d)
-      setSocketResponse(d);
-    });
-  }, []);
 
   const loadTodo = todo => {
     setSelectedTodo(todo);
@@ -80,7 +60,7 @@ function App() {
   }
 
   const logoutUser = () => {
-    deleteToken(['mr-token']);
+    deleteToken(['jp-token']);
   }
 
   if (loading) return <h1>Loading...</h1>
@@ -109,8 +89,6 @@ function App() {
           {editedTodo ? 
           <TodoForm todo={editedTodo} updatedTodo={updatedTodo} todoCreated={todoCreated} />
           : null}
-          <br></br>
-          {loggedInUser.role===role.Admin ? <p>Socket Response : {socketResponse}</p> : null}
         </div>
     </div>
   );

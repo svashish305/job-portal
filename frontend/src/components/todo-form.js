@@ -7,7 +7,7 @@ function TodoForm(props) {
     const [desc, setDesc] = useState('');
     const [priority, setPriority] = useState('');
     const [completed, setCompleted] = useState('');
-    const [token] = useCookies(['mr-token']);
+    const [token] = useCookies(['jp-token']);
 
     useEffect(() => {
         setDesc(props.todo.desc)
@@ -16,13 +16,13 @@ function TodoForm(props) {
     }, [props.todo])
     
     const updateClicked = () => {
-        API.updateTodo(props.todo._id, {desc, priority, completed}, token['mr-token'])
+        API.updateTodo(props.todo._id, {desc, priority, completed}, token['jp-token'])
         .then(resp => props.updatedTodo(resp))
         .catch(error => console.log(error))
     }
 
     const createClicked = () => {
-        API.createTodo({desc, priority, completed}, token['mr-token'])
+        API.createTodo({desc, priority, completed}, token['jp-token'])
         .then(resp => props.todoCreated(resp))
         .catch(error => console.log(error))
     }

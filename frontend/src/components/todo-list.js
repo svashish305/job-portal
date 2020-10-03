@@ -6,7 +6,7 @@ import {useCookies} from 'react-cookie';
 
 function TodoList(props) {
     
-  const [token] = useCookies(['mr-token']);
+  const [token] = useCookies(['jp-token']);
 
   const todoClicked = todo => evt => {
       props.todoClicked(todo)
@@ -17,7 +17,7 @@ function TodoList(props) {
   }
 
   const removeClicked = todo => {
-    API.deleteTodo(todo._id, token['mr-token'])
+    API.deleteTodo(todo._id, token['jp-token'])
     .then(() => props.removeClicked(todo))
     .catch(error => console.log(error))
   }

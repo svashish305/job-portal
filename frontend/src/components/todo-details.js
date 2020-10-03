@@ -3,7 +3,7 @@ import {useCookies} from 'react-cookie';
 
 function TodoDetails(props) {
 
-    const [token] = useCookies(['mr-token']);
+    const [token] = useCookies(['jp-token']);
 
     let td = props.todo;
 
@@ -12,7 +12,7 @@ function TodoDetails(props) {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': `Bearer ${token['mr-token']}`
+                'Authorization': `Bearer ${token['jp-token']}`
             }
         })
         .then(resp => resp.json())
