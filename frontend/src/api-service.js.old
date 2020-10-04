@@ -1,6 +1,6 @@
 export class API {
   static loginUser(body) {
-    return fetch(`/api/users/authenticate`, {
+    return fetch(`${process.env.REACT_APP_API_URL}/api/users/authenticate`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -10,7 +10,7 @@ export class API {
   }
 
   static registerUser(body) {
-    return fetch(`/api/users/register`, {
+    return fetch(`${process.env.REACT_APP_API_URL}/api/users/register`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -20,7 +20,7 @@ export class API {
   }
 
   static currentLoggedInUser(token) {
-    return fetch(`/api/users/loggedin`, {
+    return fetch(`${process.env.REACT_APP_API_URL}/api/users/loggedin`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -30,7 +30,7 @@ export class API {
   }
 
   static applyForJob(body, token) {
-    return fetch(`/api/users/apply-jobs`, {
+    return fetch(`${process.env.REACT_APP_API_URL}/api/users/apply-jobs`, {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",
@@ -43,7 +43,7 @@ export class API {
   }
 
   static getAppliedCandidates(token) {
-    return fetch(`/api/users/apply-history`, {
+    return fetch(`${process.env.REACT_APP_API_URL}/api/users/apply-history`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -53,7 +53,7 @@ export class API {
   }
 
   static getJobs(token) {
-    return fetch(`/api/jobs/`, {
+    return fetch(`${process.env.REACT_APP_API_URL}/api/jobs/`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -63,7 +63,7 @@ export class API {
   }
 
   static updateJob(todo_id, body, token) {
-    return fetch(`/api/jobs/${todo_id}/`, {
+    return fetch(`${process.env.REACT_APP_API_URL}/api/jobs/${todo_id}/`, {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",
@@ -74,7 +74,7 @@ export class API {
   }
 
   static createJob(body, token) {
-    return fetch(`/api/jobs/`, {
+    return fetch(`${process.env.REACT_APP_API_URL}/api/jobs/`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -87,7 +87,7 @@ export class API {
   }
 
   static deleteJob(todo_id, token) {
-    return fetch(`/api/jobs/${todo_id}/`, {
+    return fetch(`${process.env.REACT_APP_API_URL}/api/jobs/${todo_id}/`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
