@@ -31,14 +31,18 @@ function JobList(props) {
             props.jobs.map((job) => {
               return (
                 <div key={job && job._id} className="job-item">
-                  <h2 onClick={jobClicked(job)}>{job && job.company}</h2>
+                  <h2 className="pointer-cursor" onClick={jobClicked(job)}>
+                    {job && job.company}
+                  </h2>
                   <div>
                     <FontAwesomeIcon
                       icon={faEdit}
+                      className="pointer-cursor"
                       onClick={() => editClicked(job)}
                     />
                     <FontAwesomeIcon
                       icon={faTrash}
+                      className="pointer-cursor"
                       onClick={() => removeClicked(job)}
                     />
                   </div>

@@ -99,7 +99,9 @@ function App() {
               {appliedCandidates ? (
                 <CandidateList appliedCandidates={appliedCandidates} />
               ) : null}
-              <button onClick={unloadCandidates}>Go Back</button>
+              <button className="pointer-cursor" onClick={unloadCandidates}>
+                Go Back
+              </button>
             </div>
           </div>
         </div>
@@ -125,9 +127,13 @@ function App() {
                   removeClicked={removeClicked}
                 />
               ) : null}
-              {isAdmin ? <button onClick={newJob}>New Job</button> : null}
               {isAdmin ? (
-                <button onClick={loadCandidates}>
+                <button className="pointer-cursor" onClick={newJob}>
+                  New Job
+                </button>
+              ) : null}
+              {isAdmin ? (
+                <button className="pointer-cursor" onClick={loadCandidates}>
                   List of applied Candidates
                 </button>
               ) : null}

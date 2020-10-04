@@ -24,7 +24,8 @@ function JobForm(props) {
       .catch((error) => console.log(error));
   };
 
-  const isDisabled = company.length === 0 || desc.length === 0;
+  const isDisabled =
+    (company && company.length === 0) || (desc && desc.length === 0);
 
   return (
     <React.Fragment>
@@ -51,11 +52,19 @@ function JobForm(props) {
           ></textarea>
           <br />
           {props.job._id ? (
-            <button onClick={updateClicked} disabled={isDisabled}>
+            <button
+              className="pointer-cursor"
+              onClick={updateClicked}
+              disabled={isDisabled}
+            >
               Update
             </button>
           ) : (
-            <button onClick={createClicked} disabled={isDisabled}>
+            <button
+              className="pointer-cursor"
+              onClick={createClicked}
+              disabled={isDisabled}
+            >
               Create
             </button>
           )}

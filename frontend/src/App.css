@@ -90,6 +90,10 @@ h1 .fa-film {
 }
 
 /* misc */
+.pointer-cursor {
+  cursor: pointer;
+}
+
 .mb-2rem {
   margin-bottom: 2rem;
 }

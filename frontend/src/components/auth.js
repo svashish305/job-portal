@@ -54,20 +54,28 @@ function Auth() {
         />
         <br />
         {isLoginView ? (
-          <button onClick={loginClicked} disabled={isDisabled}>
+          <button
+            className="pointer-cursor"
+            onClick={loginClicked}
+            disabled={isDisabled}
+          >
             Login
           </button>
         ) : (
-          <button onClick={registerClicked} disabled={isDisabled}>
+          <button
+            className="pointer-cursor"
+            onClick={registerClicked}
+            disabled={isDisabled}
+          >
             Register
           </button>
         )}
         {isLoginView ? (
-          <p onClick={() => setIsLoginView(false)}>
+          <p className="pointer-cursor" onClick={() => setIsLoginView(false)}>
             You don't have an account, Register here!
           </p>
         ) : (
-          <p onClick={() => setIsLoginView(true)}>
+          <p className="pointer-cursor" onClick={() => setIsLoginView(true)}>
             You already have an account, Login here!
           </p>
         )}
