@@ -192,9 +192,13 @@ async function applyForJobs(id, params) {
   const user = await db.User.findById(id);
   for (let i = 0; i < params.length; i++) {
     let matchedJob = await db.Job.findById(params[i]);
-    matchedJob.applicants.push(user._id);
+    if (!matchedJob.applicants.includes(user._id)) {
+      matchedJob.applicants.push(user._id);
+    }
     await matchedJob.save();
-    user.jobApplications.push(matchedJob);
+    if (!user.jobApplications.includes(matchedJob)) {
+      user.jobApplications.push(matchedJob);
+    }
   }
   await user.save();
   return user;

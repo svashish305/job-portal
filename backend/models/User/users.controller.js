@@ -24,9 +24,9 @@ router.get("/loggedin", authorize(), getLoggedInUser);
 router.get("/apply-history", authorize(Role.Admin), getAppliedCandidates);
 router.get("/:id", authorize(), getById);
 router.post("/", authorize(Role.Admin), createSchema, create);
+router.patch("/apply-jobs", authorize(), applyForJobs);
 router.put("/:id", authorize(), updateSchema, update);
 router.delete("/:id", authorize(), _delete);
-router.patch("/apply-jobs", authorize(), applyForJobs);
 
 module.exports = router;
 

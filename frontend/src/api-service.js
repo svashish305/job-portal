@@ -31,7 +31,7 @@ export class API {
 
   static applyForJob(body, token) {
     return fetch(`${process.env.REACT_APP_API_URL}/api/users/apply-jobs`, {
-      method: "POST",
+      method: "PATCH",
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
