@@ -19,5 +19,8 @@
   "homepage": "https://github.com/svashish305/mern-crud-basic#readme",
   "devDependencies": {
     "concurrently": "^5.3.0"
+  },
+  "dependencies": {
+    "react-toastify": "^6.0.8"
   }
 }

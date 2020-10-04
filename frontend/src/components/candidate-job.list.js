@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { useCookies } from "react-cookie";
 import { API } from "../api-service";
+import { ToastContainer, toast } from "react-toastify";
+
+import "react-toastify/dist/ReactToastify.css";
 
 function CandidateJobList(props) {
   const [token] = useCookies(["jp-token"]);
-  const [show, setShow] = useState(false);
   const [applyState, setApplyState] = useState([]);
 
   useEffect(() => {
@@ -33,10 +35,17 @@ function CandidateJobList(props) {
     console.log(jobIds);
     API.applyForJob(jobIds, token["jp-token"])
       .then((resp) => {
-        console.log(resp);
-        setShow(true);
+        toast.success("Applied Successfully!");
       })
       .catch((error) => console.log(error));
+  };
+
+  const checkApplyStatus = (job_id) => {
+    if (props.loggedInUser.jobApplications.includes(job_id)) {
+      return "Applied";
+    } else {
+      return "Not Applied";
+    }
   };
 
   return (
@@ -45,14 +54,15 @@ function CandidateJobList(props) {
       {applyState.map((j, i) => (
         <div key={j._id}>
           <label>
-            {j.company} - {j.desc}
-            {/* {j.applicants && j.applicants.includes(props.loggedInUser._id)
-              ? "Applied"
-              : "Not Applied"} */}
+            {j.company} - {j.desc} : {checkApplyStatus(j._id)}
           </label>
           <input
             onChange={(event) => {
               let checked = event.target.checked;
+              if (props.loggedInUser.jobApplications.includes(j._id)) {
+                toast.error("Already Applied! Wait for new jobs");
+                checked = false;
+              }
               setApplyState(
                 applyState.map((job) => {
                   if (j._id === job._id) {
@@ -74,6 +84,7 @@ function CandidateJobList(props) {
       >
         Apply
       </button>
+      <ToastContainer />
     </div>
   );
 }
