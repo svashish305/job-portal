@@ -1,4 +1,3 @@
-// require("rootpath")();
 const express = require("express");
 const app = express();
 const path = require("path");
@@ -17,15 +16,13 @@ app.use("/api/jobs", require("./models/Job/jobs.controller"));
 
 app.use(errorHandler);
 
-app.use(express.static(path.join(__dirname, "build")));
-
 if (
   process.env.NODE_ENV === "production" ||
   process.env.NODE_ENV === "staging"
 ) {
-  app.use(express.static("../frontend/build"));
+  app.use(express.static("frontend/build"));
   app.get("*", (req, res) => {
-    res.sendFile(path.resolve(__dirname, "../frontend", "build", "index.html"));
+    res.sendFile(path.resolve(__dirname, "frontend", "build", "index.html"));
   });
 }
 
