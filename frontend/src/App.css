@@ -107,3 +107,12 @@ h1 .fa-film {
 .job-candidate {
   margin: 0 1rem;
 }
+
+.cd-job-item {
+  height: 3rem;
+}
+
+.pos-checkbox {
+  position: relative;
+  left: 10rem;
+}

@@ -52,29 +52,32 @@ function CandidateJobList(props) {
     <div>
       <h2 className="mb-2rem">Apply to following jobs:</h2>
       {applyState.map((j, i) => (
-        <div key={j._id}>
+        <div key={j._id} className="cd-job-item">
           <label>
             {j.company} - {j.desc} : {checkApplyStatus(j._id)}
           </label>
-          <input
-            onChange={(event) => {
-              let checked = event.target.checked;
-              if (props.loggedInUser.jobApplications.includes(j._id)) {
-                toast.error("Already Applied! Wait for new jobs");
-                checked = false;
-              }
-              setApplyState(
-                applyState.map((job) => {
-                  if (j._id === job._id) {
-                    job.select = checked;
-                  }
-                  return job;
-                })
-              );
-            }}
-            type="checkbox"
-            checked={j.select}
-          />
+          {checkApplyStatus(j._id) === "Not Applied" ? (
+            <input
+              className="pos-checkbox"
+              onChange={(event) => {
+                let checked = event.target.checked;
+                if (props.loggedInUser.jobApplications.includes(j._id)) {
+                  toast.error("Already Applied! Wait for new jobs");
+                  checked = false;
+                }
+                setApplyState(
+                  applyState.map((job) => {
+                    if (j._id === job._id) {
+                      job.select = checked;
+                    }
+                    return job;
+                  })
+                );
+              }}
+              type="checkbox"
+              checked={j.select}
+            />
+          ) : null}
         </div>
       ))}
       <button
