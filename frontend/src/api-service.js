@@ -52,6 +52,16 @@ export class API {
     }).then((resp) => resp.json());
   }
 
+  static getAppliedCandidatesOfJob(job_id, token) {
+    return fetch(`/api/jobs/applicants/${job_id}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    }).then((resp) => resp.json());
+  }
+
   static getJobs(token) {
     return fetch(`/api/jobs/`, {
       method: "GET",
@@ -62,8 +72,8 @@ export class API {
     }).then((resp) => resp.json());
   }
 
-  static updateJob(todo_id, body, token) {
-    return fetch(`/api/jobs/${todo_id}/`, {
+  static updateJob(job_id, body, token) {
+    return fetch(`/api/jobs/${job_id}/`, {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",
@@ -86,8 +96,8 @@ export class API {
       .catch((err) => console.log(err));
   }
 
-  static deleteJob(todo_id, token) {
-    return fetch(`/api/jobs/${todo_id}/`, {
+  static deleteJob(job_id, token) {
+    return fetch(`/api/jobs/${job_id}/`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",

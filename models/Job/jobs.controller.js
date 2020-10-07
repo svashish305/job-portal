@@ -4,6 +4,7 @@ const authorize = require("../../middleware/authorize");
 const Role = require("../../role");
 const jobService = require("./job.service");
 router.get("/", authorize(), getAll);
+router.get("/applicants/:id", authorize(Role.Admin), getApplicantsOfJob);
 router.get("/:id", authorize(Role.Admin), getById);
 router.post("/", authorize(Role.Admin), create);
 router.patch("/:id", authorize(Role.Admin), update);
@@ -50,5 +51,12 @@ function _delete(req, res, next) {
   jobService
     .delete(req.params.id)
     .then(() => res.json({ message: "Job deleted successfully" }))
+    .catch(next);
+}
+
+function getApplicantsOfJob(req, res, next) {
+  jobService
+    .getApplicants(req.params.id)
+    .then((applicants) => res.json(applicants))
     .catch(next);
 }

@@ -6,6 +6,7 @@ module.exports = {
   create,
   update,
   delete: _delete,
+  getApplicants,
 };
 
 async function getAll() {
@@ -37,4 +38,14 @@ async function update(id, params) {
 async function _delete(id) {
   const job = await getById(id);
   await job.remove();
+}
+
+async function getApplicants(id) {
+  const job = await getById(id);
+  let candidates = [];
+  for (let i = 0; i < job.applicants.length; i++) {
+    let applicant = await db.User.findById(job.applicants[i]);
+    candidates.push(applicant);
+  }
+  return candidates;
 }
