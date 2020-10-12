@@ -1,4 +1,5 @@
-# Basic ToDo CRUD app using MERN stack
+# MERN Job Portal Prototype
+[See live demo](https://sv-job-portal.herokuapp.com/)
 
 ## Getting Started
 
